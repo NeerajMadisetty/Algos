@@ -1,0 +1,33 @@
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+
+        int[] inDegree = new int[n];
+        List<List<Integer>> edges = new ArrayList<>();
+        for(int i=0; i<n; i++) edges.add(new ArrayList<>());
+
+        for(int i=0; i<relations.length; i++){
+            inDegree[relations[i][1]-1]++;
+            edges.get(relations[i][0]-1).add(relations[i][1]-1);
+        }
+
+        Deque<Integer> queue = new ArrayDeque<>();
+
+        for(int i=0; i<n; i++){
+            if(inDegree[i] == 0) queue.addLast(i);
+        }
+        int semesters = 0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            while(size > 0){
+                int u = queue.pop();
+                for(Integer node: edges.get(u)){
+                    if(--inDegree[node] == 0) queue.add(node);
+                }
+                size--;
+            }
+            semesters++;
+        }
+        for(int i=0; i<inDegree.length; i++) if(inDegree[i] !=0 ) return -1;
+        return semesters;
+    }
+}
