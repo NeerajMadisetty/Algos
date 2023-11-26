@@ -18,7 +18,7 @@ public class QuickSelect2 {
 				continue;
 			}
 			if(read == write){
-				read++;
+				read++; write++;
 				continue;
 			}
 			int temp  = arr[read];
