@@ -17,7 +17,10 @@ public class QuickSelect2 {
 				read++;
 				continue;
 			}
-			if(read == write) continue;
+			if(read == write){
+				read++;
+				continue;
+			}
 			int temp  = arr[read];
 			arr[read] = arr[write];
 			arr[write] = temp;
