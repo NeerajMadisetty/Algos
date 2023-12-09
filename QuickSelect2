@@ -1,36 +1,35 @@
-package com.practice;
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
 
-import java.util.Arrays;
+        return quickSelect(nums,nums.length-k+1,0,nums.length-1);
+    }
 
-public class QuickSelect2 {
+    int quickSelect(int[] nums, int k, int start, int end){
+        int pivotIndex = partition(nums,start, end);
+        if(pivotIndex == k-1) return nums[pivotIndex];
+        else if(pivotIndex < k-1){
+            return quickSelect(nums,k,pivotIndex+1,end);
+        } else{
+            return quickSelect(nums,k,start,pivotIndex-1);
+        }
+    }
 
-	public static void main(String[] args) {
-		
-		int[] arr = {34,12,93,11,56,7,9,3,10,87,35,65};
-		
-		int pivot = 34;
-		int read = 0;
-		int write = 0;
-		
-		while(read < arr.length) {
-			if(arr[read] > pivot) {
-				read++;
-				continue;
-			}
-			if(read == write){
-				read++; write++;
-				continue;
-			}
-			int temp  = arr[read];
-			arr[read] = arr[write];
-			arr[write] = temp;
-			read++; 
-			write++;
-			
-		}
-		System.out.println(Arrays.toString(arr));
+    int partition(int[] nums, int start, int end){
 
-	}
-	
-
-}
+        int pivot = nums[end];
+        int a = start;
+        int i = start;
+        while(i <= end){
+            if(nums[i] < pivot){
+                int temp = nums[a];
+                nums[a] = nums[i];
+                nums[i] = temp;
+                a++;
+            }
+            i++;
+        }
+        int temp = nums[end];
+        nums[end] = nums[a];
+        nums[a] = temp;
+        return a;
+  
